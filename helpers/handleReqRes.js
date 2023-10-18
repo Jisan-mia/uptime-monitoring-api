@@ -29,16 +29,6 @@ handler.handleReqRes = function (req, res) {
   let realData = '';
 
   const chosenHandler = routes[trimmedPath] || notFoundHandler;
-  chosenHandler(requestProperties, (statusCode, payload) => {
-    statusCode = +statusCode || 500; // typeof statusCode === 'number' ? statusCode : 500;
-    payload = payload instanceof Object ? payload : {};
-
-    const payloadString = JSON.stringify(payload);
-
-    // return the final response
-    res.writeHead(statusCode);
-    res.end(payloadString);
-  });
 
   req.on('data', (buffer) => {
     realData += decoder.write(buffer);
@@ -46,7 +36,16 @@ handler.handleReqRes = function (req, res) {
 
   req.on('end', () => {
     realData += decoder.end();
-    console.log(realData);
+    chosenHandler(requestProperties, (statusCode, payload) => {
+      statusCode = +statusCode || 500; // typeof statusCode === 'number' ? statusCode : 500;
+      payload = payload instanceof Object ? payload : {};
+
+      const payloadString = JSON.stringify(payload);
+
+      // return the final response
+      res.writeHead(statusCode);
+      res.end(payloadString);
+    });
     res.end('Hello World!');
   });
 };
