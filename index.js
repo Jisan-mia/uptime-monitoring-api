@@ -1,5 +1,6 @@
 // dependencies
 const http = require('http');
+const { handleReqRes } = require('./helpers/handleReqRes');
 
 // app object - module scaffolding
 const app = {};
@@ -18,10 +19,6 @@ app.createSever = function () {
 };
 
 // handle request response
-app.handleReqRes = function (req, res) {
-  // response handle
-  res.write('hi');
-  res.end('hello world!');
-};
+app.handleReqRes = handleReqRes;
 
 app.createSever();
