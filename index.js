@@ -7,10 +7,19 @@ const database = require('./lib/data');
 const app = {};
 
 // testing file system
-database.create('test', 'newFile', { name: 'Bangladesh', language: 'Bangla' }, (err) => {
+// database.create('test', 'newFile', { name: 'Bangladesh', language: 'Bangla' }, (err) => {
+//   console.log(err);
+// });
+
+database.read('test', 'newFile', (err, data) => {
+  console.log(err, data);
+});
+database.update('test', 'newFile', { playerName: 'Mosfique', age: '40' }, (err) => {
   console.log(err);
 });
-
+database.read('test', 'newFile', (err, data) => {
+  console.log(err, data);
+});
 // create server
 app.createSever = function () {
   const server = http.createServer(app.handleReqRes);
