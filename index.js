@@ -20,6 +20,9 @@ database.update('test', 'newFile', { playerName: 'Mosfique', age: '40' }, (err) 
 database.read('test', 'newFile', (err, data) => {
   console.log(err, data);
 });
+database.delete('test', 'newFile', (err) => {
+  console.log(err);
+});
 // create server
 app.createSever = function () {
   const server = http.createServer(app.handleReqRes);
